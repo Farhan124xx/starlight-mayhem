@@ -1273,7 +1273,7 @@ class PlayState extends MusicBeatState
 		// startCountdown();
 
 		generateSong(SONG.song);
-		#if LUA_ALLOWED
+		#if (LUA_ALLOWED && MODS_ALLOWED)
 		for (notetype in noteTypeMap.keys()) {
 			var luaToLoad:String = Paths.modFolders('custom_notetypes/' + notetype + '.lua');
 			if(FileSystem.exists(luaToLoad)) {
@@ -2239,11 +2239,7 @@ songSpeed = SONG.speed;
 
 		var songName:String = Paths.formatToSongPath(SONG.song);
 		var file:String = Paths.json(songName + '/events');
-		#if sys
-		if (FileSystem.exists(Paths.modsJson(songName + '/events')) || FileSystem.exists(file)) {
-		#else
 		if (OpenFlAssets.exists(file)) {
-		#end
 		}
 		if (songName == 'parallax' || songName =='coda' || songName == 'starstorm' || songName == 'focus')
 			{
@@ -4348,15 +4344,15 @@ songSpeed = SONG.speed;
 						{
 								FlxTransitionableState.skipNextTransIn = false;
 								FlxTransitionableState.skipNextTransOut = false;
-										var video:VideoHandlerMP4 = new VideoHandlerMP4();
-										video.playMP4(Paths.video('final_cutscene'));
-										video.finishCallback = function()
-										{
-											FlxG.sound.playMusic(Paths.music('freakyMenu'));
-											MusicBeatState.switchState(new StoryMenuState());
-											ClientPrefs.mainweek = true;
-											FlxG.save.data.beatenweek1 = true;
-										}
+										
+								var video:BrowserVideoPlayer = new BrowserVideoPlayer("final_cutscene");
+		                        (video).finishCallback = function() 
+		                        {
+									FlxG.sound.playMusic(Paths.music('freakyMenu'));
+									MusicBeatState.switchState(new StoryMenuState());
+									ClientPrefs.mainweek = true;
+									FlxG.save.data.beatenweek1 = true;
+								}
 						}
 						else
 						{

@@ -29,10 +29,6 @@ import haxe.Exception;
 import flixel.tweens.FlxEase;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
-#if cpp
-import sys.FileSystem;
-import sys.io.File;
-#end
 
 using StringTools;
 
@@ -79,45 +75,10 @@ class Cache extends MusicBeatState
 		percentlol.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(percentlol);
 
-		#if cpp
-		for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images/characters")))
-		{
-			if (!i.endsWith(".png"))
-				continue;
-			images.push(i);
-		}
-
-		for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/CJ/images")))
-			{
-				if (!i.endsWith(".png"))
-					continue;
-				images2.push(i);
-			}
-
-		for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/images/1280x720 storyMenu")))
-			{
-				if (!i.endsWith(".png"))
-					continue;
-				images3.push(i);
-			}
-
-		for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/songs")))
-		{
-			music.push(i);
-		}
-		#end
-
-
-		#if cpp
-		sys.thread.Thread.create(() -> {
-			cachethem();
-		});
-		#end
+		cachethem();
 
 		super.create();
 	}
-	var ism:Int = 0;
-	var max:Int = 0;
 	override function update(elapsed) 
 	{
 		super.update(elapsed);
@@ -126,60 +87,26 @@ class Cache extends MusicBeatState
 
 	function changetext() {
 		new FlxTimer().start(0.5, function(tmr:FlxTimer)
+		{
+			aaaaa.text = 'Loading.';
+			new FlxTimer().start(0.5, function(tmr:FlxTimer)
 			{
-				aaaaa.text = 'Loading.';
+				aaaaa.text = 'Loading..';
 				new FlxTimer().start(0.5, function(tmr:FlxTimer)
-					{
-						aaaaa.text = 'Loading..';
-						new FlxTimer().start(0.5, function(tmr:FlxTimer)
-							{
-								aaaaa.text = 'Loading...';
-								changetext();
-							});
-					});
+				{
+					aaaaa.text = 'Loading...';
+					changetext();
+				});
 			});
+		});
 	}
 
-	function cachethem() {
-			whatisloading = 'Characters';
-			max = getAnumbaNine(1);
-			ism = 0;
-
-
-			for (i in images)
-				{
-					var replaced = i.replace(".png","");
-					trace(replaced);
-					trace(Paths.image('characters/' + replaced,'shared'));
-					FlxG.bitmap.add(Paths.image('characters/' + replaced,'shared'));
-				}
-
-			for (i in images2)
-				{
-					var replaced = i.replace(".png","");
-					FlxG.bitmap.add(Paths.image(replaced,'CJ'));
-				}
-
-			for (i in images3)
-				{
-					var replaced = i.replace(".png","");
-					//trace(replaced);
-					FlxG.bitmap.add(Paths.image('1280x720 storyMenu/' + replaced));
-				}
-
-			for (i in music)
-				{
-					FlxG.sound.cache(Paths.inst(i));
-					FlxG.sound.cache(Paths.voices(i));
-				}
-        
-
-			new FlxTimer().start(1, function(tmr:FlxTimer)
-				{
-					FlxG.switchState(new TitleState());
-				});
-        
-
+	function cachethem() 
+	{       
+		new FlxTimer().start(5, function(tmr:FlxTimer)
+		{
+			FlxG.switchState(new TitleState());
+		});
     }
 
 	function getAnumbaNine(getm:Int) // really sorry for this code lmao

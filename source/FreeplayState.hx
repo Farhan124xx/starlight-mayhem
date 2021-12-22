@@ -284,6 +284,10 @@ class FreeplayState extends MusicBeatState
 						songspr.members[i].alpha = 0;
 					}
 			}
+
+                #if mobileC
+		addVirtualPad(FULL, A_B_X_Y);
+		#end
 		
 		super.create();
 	}

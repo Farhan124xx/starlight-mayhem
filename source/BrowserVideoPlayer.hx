@@ -10,11 +10,9 @@ using StringTools;
 
 class BrowserVideoPlayer extends FlxBasic
 {
-	public static var androidPath:String = 'file:///android_asset/';
+	public static var androidPath:String = 'file:///android_asset/assets/videos/';
 
-	public static var source1:String = 'assets/videos/';
-
-    public var finishCallback:Void->Void = null;
+        public var finishCallback:Void->Void = null;
 
 	public function new(source:String)
 	{
@@ -23,18 +21,7 @@ class BrowserVideoPlayer extends FlxBasic
 		WebView.onClose = onClose;
 		WebView.onURLChanging= onURLChanging;
 
-		WebView.open(androidPath + source1 + source + '.html', false, null, ['http://exitme(.*)']);
-	}
-
-	public override function update(dt:Float) 
-	{
-      if(FlxG.android.justReleased.BACK)
-      {
-         if(finishCallback != null) 
-         	finishCallback();
-      }
-
-		super.update(dt);	
+		WebView.open(androidPath + source + '.html', false, null, ['http://exitme(.*)'], true, false);
 	}
 
 	function onClose()
@@ -47,7 +34,7 @@ class BrowserVideoPlayer extends FlxBasic
 
 	function onURLChanging(url:String) 
 	{
-		if (url == 'http://exitme/') if(finishCallback != null) finishCallback(); // drity hack lol
-		trace("WebView is about to open: "+url);
+		if (url == 'http://exitme/') 
+                         onClose(); // drity hack lol
 	}
 }

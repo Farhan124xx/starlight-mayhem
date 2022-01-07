@@ -21,7 +21,7 @@ class BrowserVideoPlayer extends FlxBasic
 		WebView.onClose = onClose;
 		WebView.onURLChanging= onURLChanging;
 
-		WebView.open(androidPath + source + '.html', false, null, ['http://exitme(.*)'], true, false);
+		WebView.open(androidPath + source + '.html', false, null, ['http://exitme(.*)']);
 	}
 
 	function onClose()

@@ -14,6 +14,7 @@ class BrowserFunctions extends FlxBasic
     public static var StoragePath:String = lime.system.System.applicationStorageDirectory;
 
 	public function new() {
+               super();
 	}
 
 	public function playVideo(path:String) {

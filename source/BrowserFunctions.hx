@@ -16,21 +16,30 @@ class BrowserFunctions extends FlxBasic {
 		super();
 	}
 
+        var url:String = null;
+
 	public function playVideo(path:String) {
+
+        WebView.onClose = onClose;
+	WebView.onURLChanging= onURLChanging;
+
         //i finded this on this site https://stackoverflow.com/questions/13332261/access-a-local-file-with-file-in-android
         if (sys.FileSystem.exists(path))//Android/Data Thing
         {
-        	openURL('file://' + path + '.html');//this is how file shoud be in browser
+        	url = 'file://' + path + '.html';//this is how file shoud be in browser
+                WebView.open(url, false, null, ['http://exitme(.*)']);
         }
         else if (sys.FileSystem.exists(StoragePath + path))//Application Storage Check
         {
-        	openURL('file:///android_asset/' + path + '.html');//this is how file shoud be in browser
+                url = 'file:///android_asset/ + path + '.html';//this is how file shoud be in browser
+                WebView.open(url, false, null, ['http://exitme(.*)']);
         }
         else//if the video is null will not crash the game
         {
         	if (finishCallback != null)
 				finishCallback();
         }
+
 	}
 
 	public function openURL(url:String) {

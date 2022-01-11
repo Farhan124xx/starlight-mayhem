@@ -8,45 +8,23 @@ import extension.webview.WebView;
 using StringTools;
 
 class BrowserFunctions extends FlxBasic {
-    public var finishCallback:Void->Void = null;
+        public var finishCallback:Void->Void = null;
 
-    public static var StoragePath:String = lime.system.System.applicationStorageDirectory;
-
-	public function new() {
-		super();
-	}
-
-        var url:String = null;
-
-	public function playVideo(path:String) {
+	public function new(path:String, isWebPage:Bool = false) {
 
         WebView.onClose = onClose;
 	WebView.onURLChanging= onURLChanging;
 
-        //i finded this on this site https://stackoverflow.com/questions/13332261/access-a-local-file-with-file-in-android
-        if (sys.FileSystem.exists(path))//Android/Data Thing
+        if (!isWebPage)
         {
-        	url = 'file://' + path + '.html';//this is how file shoud be in browser
-                WebView.open(url, false, null, ['http://exitme(.*)']);
+                WebView.open('file:///android_asset/' + path + '.html', false, null, ['http://exitme(.*)']);
         }
-        else if (sys.FileSystem.exists(StoragePath + path))//Application Storage Check
+        else
         {
-                url = 'file:///android_asset/ + path + '.html';//this is how file shoud be in browser
-                WebView.open(url, false, null, ['http://exitme(.*)']);
-        }
-        else//if the video is null will not crash the game
-        {
-        	if (finishCallback != null)
-				finishCallback();
+                WebView.open(path, false, null, ['http://exitme(.*)']);
         }
 
-	}
-
-	public function openURL(url:String) {
-		WebView.onClose = onClose;
-		WebView.onURLChanging= onURLChanging;
-
-		WebView.open(url, false, null, ['http://exitme(.*)']);
+		super();
 	}
 
 	public override function update(elapsed:Float) {

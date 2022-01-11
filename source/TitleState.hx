@@ -406,9 +406,8 @@ class TitleState extends MusicBeatState
 
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
-                                        var video:BrowserFunctions = new BrowserFunctions();
-					video.playVideo("assets/videos/final_cutscene");
-                                        (video).finishCallback = function() 
+                                        var video:BrowserFunctions = new BrowserFunctions("assets/videos/final_cutscene", false);
+                                        video.finishCallback = function() 
                                         {
 	                                        MusicBeatState.switchState(new MainMenuState());
                                         }

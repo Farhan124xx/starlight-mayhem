@@ -15,7 +15,7 @@ class BrowserFunctions extends WebView
 	public function new() {
 	}
 
-	public static function playVideo(path:String) {
+	public function playVideo(path:String) {
         //i finded this on this site https://stackoverflow.com/questions/13332261/access-a-local-file-with-file-in-android
         if (sys.FileSystem.exists(path))//Android/Data Thing
         {
@@ -49,8 +49,8 @@ class BrowserFunctions extends WebView
             onClose(); // drity hack lol
 	}
 
-	override function update(elapsed:Float) {
-		for (touch in FlxG.touches.list)
+	public override function update(elapsed:Float) {
+		for (touch in flixel.FlxG.touches.list)
 			if (touch.justReleased)
 				onClose();
 

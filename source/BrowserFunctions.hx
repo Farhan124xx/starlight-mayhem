@@ -7,8 +7,7 @@ import extension.webview.WebView;
 
 using StringTools;
 
-class BrowserFunctions extends FlxBasic
-{
+class BrowserFunctions extends FlxBasic {
     public var finishCallback:Void->Void = null;
 
     public static var StoragePath:String = lime.system.System.applicationStorageDirectory;
@@ -34,7 +33,7 @@ class BrowserFunctions extends FlxBasic
         }
 	}
 
-	public static function openURL(url:String) {
+	public function openURL(url:String) {
 		WebView.onClose = onClose;
 		WebView.onURLChanging= onURLChanging;
 

@@ -2,11 +2,12 @@
 package;
 
 import flixel.FlxState;
+import flixel.FlxBasic;
 import extension.webview.WebView;
 
 using StringTools;
 
-class BrowserFunctions extends WebView
+class BrowserFunctions extends FlxBasic
 {
     public var finishCallback:Void->Void = null;
 
